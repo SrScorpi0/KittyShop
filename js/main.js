@@ -55,7 +55,7 @@ const productos = [
     {
         id: "camiseta-01",
         titulo: "Camiseta 01",
-        imagen: "./img/abrigos/01.jpg",
+        imagen: "./img/camisetas/01.jpg",
         categoria: {
             nombre: "Camisetas",
             id: "camisetas"
