@@ -35,7 +35,7 @@ a{
 }
 
 aside {
-    padding: 2rem;
+    padding: 1rem;
     padding-right: 0;
     color: var(--clr-white);
     position: sticky;
@@ -46,10 +46,10 @@ aside {
     justify-content: space-between;
 }
 
-.logo { 
-    font-weight: 400;
-    font-size: 1.3rem;
-}
+.logo {
+       width: 100%; /* ajusta según tu logo */
+       height: auto;
+   } 
 
 .menu {
     display: flex;

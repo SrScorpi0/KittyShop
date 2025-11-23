@@ -1,188 +1,90 @@
 // PRODUCTOS
 const productos = [
-    // Abrigos
+    // Ceramicas
     {
-        id: "abrigo-01",
-        titulo: "Abrigo 01",
-        imagen: "./img/abrigos/01.jpg",
+        id: "ceramica-01",
+        titulo: "ceramica 01",
+        imagen: "/img/Ceramicas/ceramica-01.jpg",
         categoria: {
-            nombre: "Abrigos",
-            id: "abrigos"
+            nombre: "Ceramicas",
+            id: "ceramicas"
         },
         precio: 1000
     },
     {
-        id: "abrigo-02",
-        titulo: "Abrigo 02",
-        imagen: "./img/abrigos/02.jpg",
+        id: "ceramica-02",
+        titulo: "ceramica 02",
+        imagen: "/img/Ceramicas/ceramica-02.png",
         categoria: {
-            nombre: "Abrigos",
-            id: "abrigos"
+            nombre: "Ceramicas",
+            id: "ceramicas"
+        },
+        precio: 1000
+    },
+
+      // Toallones
+    {
+        id: "toallon-01",
+        titulo: "toallon 01",
+        imagen: "/img/Toallas/Toallon-01.jpg",
+        categoria: {
+            nombre: "Toallones",
+            id: "toallones"
         },
         precio: 1000
     },
     {
-        id: "abrigo-03",
-        titulo: "Abrigo 03",
-        imagen: "./img/abrigos/03.jpg",
+        id: "toallon-02",
+        titulo: "toallon 02",
+        imagen: "/img/Toallas/Toallon-02.jpg",
         categoria: {
-            nombre: "Abrigos",
-            id: "abrigos"
+            nombre: "Toallones",
+            id: "toallones"
         },
         precio: 1000
     },
     {
-        id: "abrigo-04",
-        titulo: "Abrigo 04",
-        imagen: "./img/abrigos/04.jpg",
+        id: "toallon-03",
+        titulo: "toallon 03",
+        imagen: "/img/Toallas/Toallon-03.jpg",
         categoria: {
-            nombre: "Abrigos",
-            id: "abrigos"
+            nombre: "Toallones",
+            id: "toallones"
+        },
+        precio: 1000
+    },
+      // Repasadores
+    {
+        id: "repasador-01",
+        titulo: "repasador 01",
+        imagen: "/img/Repasadores/repasador-01 .jpg",
+        categoria: {
+            nombre: "Repasadores",
+            id: "repasadores"
         },
         precio: 1000
     },
     {
-        id: "abrigo-05",
-        titulo: "Abrigo 05",
-        imagen: "./img/abrigos/05.jpg",
+        id: "repasador-02",
+        titulo: "repasador 02",
+        imagen: "/img/Repasadores/repasador-02 .jpg",
         categoria: {
-            nombre: "Abrigos",
-            id: "abrigos"
-        },
-        precio: 1000
-    },
-    // Camisetas
-    {
-        id: "camiseta-01",
-        titulo: "Camiseta 01",
-        imagen: "./img/camisetas/01.jpg",
-        categoria: {
-            nombre: "Camisetas",
-            id: "camisetas"
+            nombre: "Repasadores",
+            id: "repasadores"
         },
         precio: 1000
     },
     {
-        id: "camiseta-02",
-        titulo: "Camiseta 02",
-        imagen: "./img/camisetas/02.jpg",
+        id: "repasador-03",
+        titulo: "repasador 03",
+        imagen: "/img/Repasadores/repasador-03 .jpg",
         categoria: {
-            nombre: "Camisetas",
-            id: "camisetas"
+            nombre: "Repasadores",
+            id: "repasadores"
         },
         precio: 1000
     },
-    {
-        id: "camiseta-03",
-        titulo: "Camiseta 03",
-        imagen: "./img/camisetas/03.jpg",
-        categoria: {
-            nombre: "Camisetas",
-            id: "camisetas"
-        },
-        precio: 1000
-    },
-    {
-        id: "camiseta-04",
-        titulo: "Camiseta 04",
-        imagen: "./img/camisetas/04.jpg",
-        categoria: {
-            nombre: "Camisetas",
-            id: "camisetas"
-        },
-        precio: 1000
-    },
-    {
-        id: "camiseta-05",
-        titulo: "Camiseta 05",
-        imagen: "./img/camisetas/05.jpg",
-        categoria: {
-            nombre: "Camisetas",
-            id: "camisetas"
-        },
-        precio: 1000
-    },
-    {
-        id: "camiseta-06",
-        titulo: "Camiseta 06",
-        imagen: "./img/camisetas/06.jpg",
-        categoria: {
-            nombre: "Camisetas",
-            id: "camisetas"
-        },
-        precio: 1000
-    },
-    {
-        id: "camiseta-07",
-        titulo: "Camiseta 07",
-        imagen: "./img/camisetas/07.jpg",
-        categoria: {
-            nombre: "Camisetas",
-            id: "camisetas"
-        },
-        precio: 1000
-    },
-    {
-        id: "camiseta-08",
-        titulo: "Camiseta 08",
-        imagen: "./img/camisetas/08.jpg",
-        categoria: {
-            nombre: "Camisetas",
-            id: "camisetas"
-        },
-        precio: 1000
-    },
-    // Pantalones
-    {
-        id: "pantalon-01",
-        titulo: "Pantalón 01",
-        imagen: "./img/pantalones/01.jpg",
-        categoria: {
-            nombre: "Pantalones",
-            id: "pantalones"
-        },
-        precio: 1000
-    },
-    {
-        id: "pantalon-02",
-        titulo: "Pantalón 02",
-        imagen: "./img/pantalones/02.jpg",
-        categoria: {
-            nombre: "Pantalones",
-            id: "pantalones"
-        },
-        precio: 1000
-    },
-    {
-        id: "pantalon-03",
-        titulo: "Pantalón 03",
-        imagen: "./img/pantalones/03.jpg",
-        categoria: {
-            nombre: "Pantalones",
-            id: "pantalones"
-        },
-        precio: 1000
-    },
-    {
-        id: "pantalon-04",
-        titulo: "Pantalón 04",
-        imagen: "./img/pantalones/04.jpg",
-        categoria: {
-            nombre: "Pantalones",
-            id: "pantalones"
-        },
-        precio: 1000
-    },
-    {
-        id: "pantalon-05",
-        titulo: "Pantalón 05",
-        imagen: "./img/pantalones/05.jpg",
-        categoria: {
-            nombre: "Pantalones",
-            id: "pantalones"
-        },
-        precio: 1000
-    }
+    
 ];
 
 const contenedorProductos = document.querySelector("#contenedor-productos");
