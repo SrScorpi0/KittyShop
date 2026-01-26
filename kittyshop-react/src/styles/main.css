@@ -191,6 +191,132 @@ main {
   font-size: 1rem;
 }
 
+.producto-descripcion {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.producto-detalle {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.producto-detalle-izquierda {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.producto-imagen-boton {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: zoom-in;
+}
+
+.producto-imagen-grande {
+  width: 100%;
+  max-width: 520px;
+  max-height: 360px;
+  object-fit: contain;
+  border-radius: 1rem;
+  display: block;
+}
+
+.producto-detalle-acciones {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.producto-volver {
+  color: var(--clr-main);
+  font-weight: 600;
+}
+
+.producto-detalle-derecha {
+  background-color: var(--clr-gray);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  color: var(--clr-main);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.producto-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.badge {
+  background: var(--clr-white);
+  color: var(--clr-main);
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.producto-separador {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.producto-detalle-meta p {
+  margin: 0;
+}
+
+.producto-zoom-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.producto-zoom-overlay.abierto {
+  opacity: 1;
+}
+
+.producto-zoom-overlay.cerrando {
+  opacity: 0;
+}
+
+.producto-zoom-imagen {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 1rem;
+  transform: scale(0.95);
+  transition: transform 0.2s ease;
+}
+
+.producto-zoom-overlay.abierto .producto-zoom-imagen {
+  transform: scale(1);
+}
+
+.producto-zoom-cerrar {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  border: 0;
+  background: rgba(255, 255, 255, 0.9);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
 .producto-agregar {
   border: 0;
   background-color: var(--clr-white);
@@ -309,6 +435,10 @@ main {
 @media screen and (max-width: 850px) {
   .contenedor-productos {
     grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .producto-detalle {
+    grid-template-columns: 1fr;
   }
 }
 

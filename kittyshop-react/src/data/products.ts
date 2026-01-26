@@ -5,6 +5,10 @@ export type Product = {
   categoryId: string;
   categoryName: string;
   price: number;
+  description: string;
+  material: string;
+  size: string;
+  color: string;
 };
 
 export type Category = {
@@ -24,6 +28,10 @@ export const products: Product[] = [
     categoryId: 'ceramicas',
     categoryName: 'Ceramicas',
     price: 1000,
+    description: 'Ceramica artesanal esmaltada en tonos suaves. Ideal para decorar o regalar.',
+    material: 'Ceramica esmaltada',
+    size: '20 cm',
+    color: 'Rosa pastel',
   },
   {
     id: 'ceramica-02',
@@ -32,6 +40,10 @@ export const products: Product[] = [
     categoryId: 'ceramicas',
     categoryName: 'Ceramicas',
     price: 1000,
+    description: 'Pieza de ceramica con acabado satinado y detalles pintados a mano.',
+    material: 'Ceramica satinada',
+    size: '18 cm',
+    color: 'Crema',
   },
   {
     id: 'toallon-01',
@@ -40,6 +52,10 @@ export const products: Product[] = [
     categoryId: 'toallones',
     categoryName: 'Toallones',
     price: 1000,
+    description: 'Toallon de algodon suave y absorbente. Tamano grande para uso diario.',
+    material: 'Algodon',
+    size: '140 x 70 cm',
+    color: 'Blanco',
   },
   {
     id: 'toallon-02',
@@ -48,6 +64,10 @@ export const products: Product[] = [
     categoryId: 'toallones',
     categoryName: 'Toallones',
     price: 1000,
+    description: 'Toallon con textura esponjosa y costuras reforzadas.',
+    material: 'Algodon peinado',
+    size: '150 x 80 cm',
+    color: 'Gris claro',
   },
   {
     id: 'toallon-03',
@@ -56,6 +76,10 @@ export const products: Product[] = [
     categoryId: 'toallones',
     categoryName: 'Toallones',
     price: 1000,
+    description: 'Toallon liviano y de secado rapido, ideal para gimnasio o playa.',
+    material: 'Microfibra',
+    size: '120 x 60 cm',
+    color: 'Azul',
   },
   {
     id: 'repasador-01',
@@ -64,6 +88,10 @@ export const products: Product[] = [
     categoryId: 'repasadores',
     categoryName: 'Repasadores',
     price: 1000,
+    description: 'Repasador de cocina con tela resistente y diseno clasico.',
+    material: 'Algodon',
+    size: '50 x 70 cm',
+    color: 'Rojo',
   },
   {
     id: 'repasador-02',
@@ -72,6 +100,10 @@ export const products: Product[] = [
     categoryId: 'repasadores',
     categoryName: 'Repasadores',
     price: 1000,
+    description: 'Repasador con textura tipo waffle para mayor absorcion.',
+    material: 'Algodon waffle',
+    size: '45 x 65 cm',
+    color: 'Beige',
   },
   {
     id: 'repasador-03',
@@ -80,5 +112,9 @@ export const products: Product[] = [
     categoryId: 'repasadores',
     categoryName: 'Repasadores',
     price: 1000,
+    description: 'Repasador liviano, facil de lavar y de secado rapido.',
+    material: 'Algodon ligero',
+    size: '45 x 65 cm',
+    color: 'Verde',
   },
 ];
