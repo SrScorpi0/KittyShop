@@ -371,7 +371,7 @@ main {
         align-items: center;
     }
 
-    .header-mobile .logo,  {
+    .header-mobile .logo  {
         color: var(--clr-gray);
     }
     
