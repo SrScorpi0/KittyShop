@@ -1,22 +1,19 @@
+import { NavLink, useNavigate } from 'react-router-dom';
 import { categories } from '../data/categories';
 
 type SidebarProps = {
   activeCategoryId: string;
   onSelectCategory: (categoryId: string) => void;
   cartCount: number;
-  onSelectCart: () => void;
-  onSelectShop: () => void;
-  isCartActive?: boolean;
 };
 
 export default function Sidebar({
   activeCategoryId,
   onSelectCategory,
   cartCount,
-  onSelectCart,
-  onSelectShop,
-  isCartActive = false,
 }: SidebarProps) {
+  const navigate = useNavigate();
+
   return (
     <aside>
       <button className="close-menu" id="close-menu" type="button">
@@ -41,8 +38,8 @@ export default function Sidebar({
                   className={buttonClass}
                   type="button"
                   onClick={() => {
-                    onSelectShop();
                     onSelectCategory(category.id);
+                    navigate('/');
                   }}
                 >
                   <i className={iconClass} />
@@ -52,14 +49,15 @@ export default function Sidebar({
             );
           })}
           <li>
-            <button
-              className={`boton-menu boton-carrito${isCartActive ? ' active' : ''}`}
-              type="button"
-              onClick={onSelectCart}
+            <NavLink
+              className={({ isActive }) =>
+                `boton-menu boton-carrito${isActive ? ' active' : ''}`
+              }
+              to="/carrito"
             >
               <i className="bi bi-cart-fill" />
               Carrito <span id="numerito" className="numerito">{cartCount}</span>
-            </button>
+            </NavLink>
           </li>
         </ul>
       </nav>

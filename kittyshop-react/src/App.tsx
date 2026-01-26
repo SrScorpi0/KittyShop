@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import HeaderMobile from './components/HeaderMobile';
 import Sidebar from './components/Sidebar';
 import Main from './components/Main';
@@ -10,7 +11,6 @@ const CART_STORAGE_KEY = 'kittyshop-cart';
 
 export default function App() {
   const [activeCategoryId, setActiveCategoryId] = useState(DEFAULT_CATEGORY);
-  const [activeView, setActiveView] = useState<'shop' | 'cart'>('shop');
   const [hasPurchased, setHasPurchased] = useState(false);
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     try {
@@ -76,21 +76,25 @@ export default function App() {
         activeCategoryId={activeCategoryId}
         onSelectCategory={setActiveCategoryId}
         cartCount={cartCount}
-        onSelectCart={() => setActiveView('cart')}
-        onSelectShop={() => setActiveView('shop')}
-        isCartActive={activeView === 'cart'}
       />
-      {activeView === 'shop' ? (
-        <Main products={visibleProducts} onAddToCart={handleAddToCart} />
-      ) : (
-        <Cart
-          items={cartItems}
-          hasPurchased={hasPurchased}
-          onRemoveItem={handleRemoveFromCart}
-          onClear={handleClearCart}
-          onPurchase={handlePurchase}
+      <Routes>
+        <Route
+          path="/"
+          element={<Main products={visibleProducts} onAddToCart={handleAddToCart} />}
         />
-      )}
+        <Route
+          path="/carrito"
+          element={
+            <Cart
+              items={cartItems}
+              hasPurchased={hasPurchased}
+              onRemoveItem={handleRemoveFromCart}
+              onClear={handleClearCart}
+              onPurchase={handlePurchase}
+            />
+          }
+        />
+      </Routes>
     </div>
   );
 }
