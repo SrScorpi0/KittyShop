@@ -171,6 +171,10 @@ main {
   border-radius: 1rem;
 }
 
+.producto-clickable {
+  cursor: pointer;
+}
+
 .producto-detalles {
   background-color: var(--clr-main);
   color: var(--clr-white);
