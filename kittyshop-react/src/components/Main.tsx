@@ -3,9 +3,10 @@ import ProductCard from './ProductCard';
 
 type MainProps = {
   products: Product[];
+  onAddToCart: (product: Product) => void;
 };
 
-export default function Main({ products }: MainProps) {
+export default function Main({ products, onAddToCart }: MainProps) {
   const title = products[0]?.categoryName ?? 'Todos los productos';
 
   return (
@@ -13,7 +14,7 @@ export default function Main({ products }: MainProps) {
       <h2 className="titulo-principal" id="titulo-principal">{title}</h2>
       <div id="contenedor-productos" className="contenedor-productos">
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
         ))}
       </div>
     </main>

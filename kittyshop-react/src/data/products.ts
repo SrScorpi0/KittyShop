@@ -12,6 +12,10 @@ export type Category = {
   label: string;
 };
 
+export type CartItem = Product & {
+  quantity: number;
+};
+
 export const products: Product[] = [
   {
     id: 'ceramica-01',

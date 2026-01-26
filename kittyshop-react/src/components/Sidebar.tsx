@@ -3,9 +3,10 @@ import { categories } from '../data/categories';
 type SidebarProps = {
   activeCategoryId: string;
   onSelectCategory: (categoryId: string) => void;
+  cartCount: number;
 };
 
-export default function Sidebar({ activeCategoryId, onSelectCategory }: SidebarProps) {
+export default function Sidebar({ activeCategoryId, onSelectCategory, cartCount }: SidebarProps) {
   return (
     <aside>
       <button className="close-menu" id="close-menu" type="button">
@@ -40,7 +41,7 @@ export default function Sidebar({ activeCategoryId, onSelectCategory }: SidebarP
           <li>
             <a className="boton-menu boton-carrito" href="/carrito.html">
               <i className="bi bi-cart-fill" />
-              Carrito <span id="numerito" className="numerito">0</span>
+              Carrito <span id="numerito" className="numerito">{cartCount}</span>
             </a>
           </li>
         </ul>
