@@ -4,6 +4,7 @@ import HeaderMobile from './components/HeaderMobile';
 import Sidebar from './components/Sidebar';
 import Main from './components/Main';
 import Cart from './components/Cart';
+import ProductDetail from './components/ProductDetail';
 import { products, type CartItem, type Product } from './data/products';
 
 const DEFAULT_CATEGORY = 'todos';
@@ -93,6 +94,10 @@ export default function App() {
               onPurchase={handlePurchase}
             />
           }
+        />
+        <Route
+          path="/producto/:id"
+          element={<ProductDetail products={products} onAddToCart={handleAddToCart} />}
         />
       </Routes>
     </div>
