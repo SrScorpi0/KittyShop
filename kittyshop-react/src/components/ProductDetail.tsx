@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { Badge, Button, Divider, Group, Stack, Text } from '@mantine/core';
 import { Link, useParams } from 'react-router-dom';
 import type { Product } from '../data/products';
 
@@ -152,49 +151,46 @@ export default function ProductDetail({ products, onAddToCart }: ProductDetailPr
           </div>
 
           <div className="producto-detalle-acciones">
-            <Button color="pink" radius="xl" onClick={() => onAddToCart(product)}>
+            <button
+              className="rounded-full bg-pink-400 px-5 py-2 font-semibold text-white transition hover:bg-pink-500"
+              type="button"
+              onClick={() => onAddToCart(product)}
+            >
               Agregar al carrito
-            </Button>
-            <Button
-              component={Link}
+            </button>
+            <Link
+              className="rounded-full border-2 border-pink-400 px-5 py-2 font-semibold text-pink-500 transition hover:bg-pink-400 hover:text-white"
               to="/"
-              variant="outline"
-              color="pink"
-              radius="xl"
             >
               Volver a la tienda
-            </Button>
+            </Link>
           </div>
         </div>
 
         <div className="producto-detalle-derecha">
-          <Stack gap="xs">
-            <Text className="producto-titulo" size="lg" fw={700}>
-              {product.title}
-            </Text>
-            <Group gap="xs" wrap="wrap">
-              <Badge variant="filled" color="pink">
-                Material: {product.material}
-              </Badge>
-              <Badge variant="filled" color="grape">
-                Tamano: {product.size}
-              </Badge>
-              <Badge variant="filled" color="indigo">
-                Color: {product.color}
-              </Badge>
-            </Group>
-            <Divider />
-            <Text className="producto-descripcion">{product.description}</Text>
-            <Text className="producto-precio" fw={700}>
-              ${product.price}
-            </Text>
-            <Text size="sm">
-              <strong>Categoria:</strong> {product.categoryName}
-            </Text>
-            <Text size="sm">
-              <strong>SKU:</strong> {product.id}
-            </Text>
-          </Stack>
+          <h3 className="producto-titulo text-lg font-bold text-pink-500">
+            {product.title}
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            <span className="rounded-full bg-pink-100 px-3 py-1 text-xs font-semibold text-pink-600">
+              Material: {product.material}
+            </span>
+            <span className="rounded-full bg-violet-100 px-3 py-1 text-xs font-semibold text-violet-600">
+              Tamano: {product.size}
+            </span>
+            <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-600">
+              Color: {product.color}
+            </span>
+          </div>
+          <div className="h-px w-full bg-black/10" />
+          <p className="producto-descripcion">{product.description}</p>
+          <p className="producto-precio text-lg font-bold text-pink-600">${product.price}</p>
+          <p className="text-sm">
+            <strong>Categoria:</strong> {product.categoryName}
+          </p>
+          <p className="text-sm">
+            <strong>SKU:</strong> {product.id}
+          </p>
         </div>
       </div>
 
