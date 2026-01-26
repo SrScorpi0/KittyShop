@@ -1,4 +1,11 @@
-export default function Sidebar() {
+import { categories } from '../data/categories';
+
+type SidebarProps = {
+  activeCategoryId: string;
+  onSelectCategory: (categoryId: string) => void;
+};
+
+export default function Sidebar({ activeCategoryId, onSelectCategory }: SidebarProps) {
   return (
     <aside>
       <button className="close-menu" id="close-menu" type="button">
@@ -9,30 +16,27 @@ export default function Sidebar() {
       </header>
       <nav>
         <ul className="menu">
-          <li>
-            <button id="todos" className="boton-menu boton-categoria active" type="button">
-              <i className="bi bi-hand-index-thumb-fill" />
-              Todos los productos
-            </button>
-          </li>
-          <li>
-            <button id="ceramicas" className="boton-menu boton-categoria" type="button">
-              <i className="bi bi-hand-index-thumb" />
-              Ceramicas
-            </button>
-          </li>
-          <li>
-            <button id="toallones" className="boton-menu boton-categoria" type="button">
-              <i className="bi bi-hand-index-thumb" />
-              Toallones
-            </button>
-          </li>
-          <li>
-            <button id="repasadores" className="boton-menu boton-categoria" type="button">
-              <i className="bi bi-hand-index-thumb" />
-              Repasadores
-            </button>
-          </li>
+          {categories.map((category) => {
+            const isActive = activeCategoryId === category.id;
+            const iconClass = category.id === 'todos'
+              ? 'bi bi-hand-index-thumb-fill'
+              : 'bi bi-hand-index-thumb';
+            const buttonClass = `boton-menu boton-categoria${isActive ? ' active' : ''}`;
+
+            return (
+              <li key={category.id}>
+                <button
+                  id={category.id}
+                  className={buttonClass}
+                  type="button"
+                  onClick={() => onSelectCategory(category.id)}
+                >
+                  <i className={iconClass} />
+                  {category.label}
+                </button>
+              </li>
+            );
+          })}
           <li>
             <a className="boton-menu boton-carrito" href="/carrito.html">
               <i className="bi bi-cart-fill" />
