@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Badge, Button, Divider, Group, Stack, Text } from '@mantine/core';
 import { Link, useParams } from 'react-router-dom';
 import type { Product } from '../data/products';
 
@@ -13,6 +14,9 @@ export default function ProductDetail({ products, onAddToCart }: ProductDetailPr
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [isZoomClosing, setIsZoomClosing] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const touchDeltaX = useRef(0);
+  const [isImageTransitioning, setIsImageTransitioning] = useState(false);
 
   useEffect(() => {
     let timer: number | undefined;
@@ -40,6 +44,41 @@ export default function ProductDetail({ products, onAddToCart }: ProductDetailPr
   const gallery = product?.images?.length ? product.images : product ? [product.image] : [];
   const activeImage = gallery[activeImageIndex] ?? product?.image;
 
+  function goPrev() {
+    setIsImageTransitioning(true);
+    setActiveImageIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
+  }
+
+  function goNext() {
+    setIsImageTransitioning(true);
+    setActiveImageIndex((prev) => (prev + 1) % gallery.length);
+  }
+
+  function handleTouchStart(event: React.TouchEvent) {
+    touchStartX.current = event.touches[0]?.clientX ?? null;
+    touchDeltaX.current = 0;
+  }
+
+  function handleTouchMove(event: React.TouchEvent) {
+    if (touchStartX.current === null) return;
+    const currentX = event.touches[0]?.clientX ?? 0;
+    touchDeltaX.current = currentX - touchStartX.current;
+  }
+
+  function handleTouchEnd() {
+    if (touchStartX.current === null) return;
+    const delta = touchDeltaX.current;
+    if (Math.abs(delta) > 40) {
+      if (delta > 0) {
+        goPrev();
+      } else {
+        goNext();
+      }
+    }
+    touchStartX.current = null;
+    touchDeltaX.current = 0;
+  }
+
   if (!product) {
     return (
       <main>
@@ -62,16 +101,25 @@ export default function ProductDetail({ products, onAddToCart }: ProductDetailPr
             onClick={openZoom}
             aria-label="Ver imagen en pantalla completa"
           >
-            <img className="producto-imagen-grande" src={activeImage} alt={product.title} />
+            <img
+              className={`producto-imagen-grande${isImageTransitioning ? ' cambiando' : ''}`}
+              src={activeImage}
+              alt={product.title}
+              onLoad={() => setIsImageTransitioning(false)}
+              onError={() => setIsImageTransitioning(false)}
+            />
           </button>
 
-          <div className="producto-galeria">
+          <div
+            className="producto-galeria"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <button
               className="producto-galeria-control"
               type="button"
-              onClick={() =>
-                setActiveImageIndex((prev) => (prev - 1 + gallery.length) % gallery.length)
-              }
+              onClick={goPrev}
               aria-label="Imagen anterior"
             >
               <i className="bi bi-chevron-left" />
@@ -82,7 +130,12 @@ export default function ProductDetail({ products, onAddToCart }: ProductDetailPr
                   key={`${src}-${index}`}
                   className={`producto-galeria-item${index === activeImageIndex ? ' activa' : ''}`}
                   type="button"
-                  onClick={() => setActiveImageIndex(index)}
+                  onClick={() => {
+                    if (index !== activeImageIndex) {
+                      setIsImageTransitioning(true);
+                    }
+                    setActiveImageIndex(index);
+                  }}
                 >
                   <img src={src} alt={`${product.title} ${index + 1}`} />
                 </button>
@@ -91,7 +144,7 @@ export default function ProductDetail({ products, onAddToCart }: ProductDetailPr
             <button
               className="producto-galeria-control"
               type="button"
-              onClick={() => setActiveImageIndex((prev) => (prev + 1) % gallery.length)}
+              onClick={goNext}
               aria-label="Imagen siguiente"
             >
               <i className="bi bi-chevron-right" />
@@ -99,33 +152,49 @@ export default function ProductDetail({ products, onAddToCart }: ProductDetailPr
           </div>
 
           <div className="producto-detalle-acciones">
-            <button
-              className="producto-agregar"
-              type="button"
-              onClick={() => onAddToCart(product)}
-            >
+            <Button color="pink" radius="xl" onClick={() => onAddToCart(product)}>
               Agregar al carrito
-            </button>
-            <Link className="producto-volver" to="/">
+            </Button>
+            <Button
+              component={Link}
+              to="/"
+              variant="outline"
+              color="pink"
+              radius="xl"
+            >
               Volver a la tienda
-            </Link>
+            </Button>
           </div>
         </div>
 
         <div className="producto-detalle-derecha">
-          <h3 className="producto-titulo">{product.title}</h3>
-          <div className="producto-badges">
-            <span className="badge">Material: {product.material}</span>
-            <span className="badge">Tamano: {product.size}</span>
-            <span className="badge">Color: {product.color}</span>
-          </div>
-          <div className="producto-separador" />
-          <p className="producto-descripcion">{product.description}</p>
-          <p className="producto-precio">${product.price}</p>
-          <div className="producto-detalle-meta">
-            <p><strong>Categoria:</strong> {product.categoryName}</p>
-            <p><strong>SKU:</strong> {product.id}</p>
-          </div>
+          <Stack gap="xs">
+            <Text className="producto-titulo" size="lg" fw={700}>
+              {product.title}
+            </Text>
+            <Group gap="xs" wrap="wrap">
+              <Badge variant="filled" color="pink">
+                Material: {product.material}
+              </Badge>
+              <Badge variant="filled" color="grape">
+                Tamano: {product.size}
+              </Badge>
+              <Badge variant="filled" color="indigo">
+                Color: {product.color}
+              </Badge>
+            </Group>
+            <Divider />
+            <Text className="producto-descripcion">{product.description}</Text>
+            <Text className="producto-precio" fw={700}>
+              ${product.price}
+            </Text>
+            <Text size="sm">
+              <strong>Categoria:</strong> {product.categoryName}
+            </Text>
+            <Text size="sm">
+              <strong>SKU:</strong> {product.id}
+            </Text>
+          </Stack>
         </div>
       </div>
 

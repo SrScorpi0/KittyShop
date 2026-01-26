@@ -225,12 +225,19 @@ main {
   object-fit: contain;
   border-radius: 1rem;
   display: block;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.producto-imagen-grande.cambiando {
+  opacity: 0;
+  transform: scale(0.98);
 }
 
 .producto-galeria {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  touch-action: pan-y;
 }
 
 .producto-galeria-control {
@@ -248,6 +255,7 @@ main {
   gap: 0.5rem;
   overflow-x: auto;
   padding: 0.2rem 0;
+  scrollbar-width: thin;
 }
 
 .producto-galeria-item {
@@ -277,24 +285,6 @@ main {
   flex-wrap: wrap;
 }
 
-.producto-volver {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  border: 2px solid var(--clr-main);
-  color: var(--clr-main);
-  font-weight: 600;
-  padding: 0.35rem 1rem;
-  border-radius: 999px;
-  background: transparent;
-  transition: background-color 0.2s, color 0.2s;
-}
-
-.producto-volver:hover {
-  background: var(--clr-main);
-  color: var(--clr-white);
-}
-
 .producto-detalle-derecha {
   background-color: var(--clr-gray);
   padding: 1.5rem;
@@ -304,27 +294,6 @@ main {
   flex-direction: column;
   gap: 0.85rem;
   min-height: 360px;
-}
-
-.producto-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.badge {
-  background: var(--clr-white);
-  color: var(--clr-main);
-  border-radius: 999px;
-  padding: 0.35rem 0.7rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.producto-separador {
-  height: 1px;
-  background: rgba(0, 0, 0, 0.1);
-  width: 100%;
 }
 
 .producto-detalle-meta p {
