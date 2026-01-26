@@ -4,9 +4,19 @@ type SidebarProps = {
   activeCategoryId: string;
   onSelectCategory: (categoryId: string) => void;
   cartCount: number;
+  onSelectCart: () => void;
+  onSelectShop: () => void;
+  isCartActive?: boolean;
 };
 
-export default function Sidebar({ activeCategoryId, onSelectCategory, cartCount }: SidebarProps) {
+export default function Sidebar({
+  activeCategoryId,
+  onSelectCategory,
+  cartCount,
+  onSelectCart,
+  onSelectShop,
+  isCartActive = false,
+}: SidebarProps) {
   return (
     <aside>
       <button className="close-menu" id="close-menu" type="button">
@@ -30,7 +40,10 @@ export default function Sidebar({ activeCategoryId, onSelectCategory, cartCount 
                   id={category.id}
                   className={buttonClass}
                   type="button"
-                  onClick={() => onSelectCategory(category.id)}
+                  onClick={() => {
+                    onSelectShop();
+                    onSelectCategory(category.id);
+                  }}
                 >
                   <i className={iconClass} />
                   {category.label}
@@ -39,10 +52,14 @@ export default function Sidebar({ activeCategoryId, onSelectCategory, cartCount 
             );
           })}
           <li>
-            <a className="boton-menu boton-carrito" href="/carrito.html">
+            <button
+              className={`boton-menu boton-carrito${isCartActive ? ' active' : ''}`}
+              type="button"
+              onClick={onSelectCart}
+            >
               <i className="bi bi-cart-fill" />
               Carrito <span id="numerito" className="numerito">{cartCount}</span>
-            </a>
+            </button>
           </li>
         </ul>
       </nav>
