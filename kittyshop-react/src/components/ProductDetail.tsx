@@ -83,7 +83,7 @@ export default function ProductDetail({ products, onAddToCart }: ProductDetailPr
       <main>
         <h2 className="titulo-principal">Producto no encontrado</h2>
         <p>El producto que buscas no existe.</p>
-        <Link className="boton-menu" to="/">
+        <Link className="boton-menu" to="/productos">
           Volver a la tienda
         </Link>
       </main>
@@ -160,7 +160,7 @@ export default function ProductDetail({ products, onAddToCart }: ProductDetailPr
             </button>
             <Link
               className="rounded-full border-2 border-pink-400 px-5 py-2 font-semibold text-pink-500 transition hover:bg-pink-400 hover:text-white"
-              to="/"
+              to="/productos"
             >
               Volver a la tienda
             </Link>

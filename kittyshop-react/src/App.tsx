@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import HeaderMobile from './components/HeaderMobile';
 import Sidebar from './components/Sidebar';
 import Main from './components/Main';
 import Cart from './components/Cart';
 import ProductDetail from './components/ProductDetail';
+import Home from './components/Home';
 import { products, type CartItem, type Product } from './data/products';
 
 const DEFAULT_CATEGORY = 'todos';
@@ -70,17 +71,26 @@ export default function App() {
     setHasPurchased(true);
   }
 
+  function ShopLayout() {
+    return (
+      <div className="wrapper">
+        <HeaderMobile />
+        <Sidebar
+          activeCategoryId={activeCategoryId}
+          onSelectCategory={setActiveCategoryId}
+          cartCount={cartCount}
+        />
+        <Outlet />
+      </div>
+    );
+  }
+
   return (
-    <div className="wrapper">
-      <HeaderMobile />
-      <Sidebar
-        activeCategoryId={activeCategoryId}
-        onSelectCategory={setActiveCategoryId}
-        cartCount={cartCount}
-      />
-      <Routes>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route element={<ShopLayout />}>
         <Route
-          path="/"
+          path="/productos"
           element={<Main products={visibleProducts} onAddToCart={handleAddToCart} />}
         />
         <Route
@@ -99,7 +109,7 @@ export default function App() {
           path="/producto/:id"
           element={<ProductDetail products={products} onAddToCart={handleAddToCart} />}
         />
-      </Routes>
-    </div>
+      </Route>
+    </Routes>
   );
 }

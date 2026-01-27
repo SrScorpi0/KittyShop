@@ -39,7 +39,7 @@ export default function Sidebar({
                   type="button"
                   onClick={() => {
                     onSelectCategory(category.id);
-                    navigate('/');
+                    navigate('/productos');
                   }}
                 >
                   <i className={iconClass} />
