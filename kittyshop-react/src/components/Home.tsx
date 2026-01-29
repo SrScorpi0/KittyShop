@@ -1,6 +1,32 @@
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Home() {
+  const images = useMemo(
+    () => [
+      '/img/Ceramicas/ceramica-01.jpg',
+      '/img/Toallas/Toallon-01.jpg',
+      '/img/Repasadores/repasador-01 .jpg',
+    ],
+    [],
+  );
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  function goPrev() {
+    setActiveIndex((prev) => (prev - 1 + images.length) % images.length);
+  }
+
+  function goNext() {
+    setActiveIndex((prev) => (prev + 1) % images.length);
+  }
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % images.length);
+    }, 3000);
+    return () => window.clearInterval(timer);
+  }, [images.length]);
+
   return (
     <div className="transition-all duration-300 w-full">
       <header className="bg-white text-gray-900 shadow-sm border-b border-gray-200">
@@ -52,8 +78,8 @@ export default function Home() {
         </div>
       </header>
 
-      <div className="flex flex-col gap-16">
-      <section className="bg-pink-50 py-20 flex justify-center">
+      <div className="flex flex-col gap-2 bg-pink-50">
+      <section className="bg-pink-50 py-10 flex justify-center">
         <div className="w-full max-w-6xl px-6 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="text-center lg:text-left">
@@ -66,30 +92,70 @@ export default function Home() {
               <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
                 <Link
                   to="/productos"
-                  className="px-6 py-3 bg-pink-400 text-white rounded-lg font-semibold hover:bg-pink-500 transition-colors"
+                  className="px-4 py-2 inline-flex items-center justify-center bg-pink-400 text-white rounded-lg font-semibold hover:bg-pink-500 transition-colors"
                 >
                   Ver productos
                 </Link>
                 <a
                   href="#contacto"
-                  className="px-6 py-3 border border-pink-200 text-pink-500 rounded-lg font-semibold hover:border-pink-300 hover:text-pink-600 transition-colors"
+                  className="px-8 py-4 border border-pink-200 text-pink-500 rounded-lg font-semibold hover:border-pink-300 hover:text-pink-600 transition-colors"
                 >
                   Contactanos
                 </a>
               </div>
             </div>
             <div className="order-first lg:order-last">
-              <img
-                src="/img/Ceramicas/ceramica-01.jpg"
-                alt="Productos Kitty"
-                className="w-full object-contain rounded-lg shadow-lg border border-pink-100 bg-white"
-              />
+              <div className="relative w-full overflow-hidden rounded-lg shadow-lg border border-pink-100 bg-white h-[320px] md:h-[400px]">
+                <div
+                  className="flex h-full w-full transition-transform duration-700 ease-in-out"
+                  style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+                >
+                  {images.map((src, index) => (
+                    <div key={`${src}-${index}`} className="h-full w-full flex-shrink-0">
+                      <img
+                        src={src}
+                        alt={`Producto ${index + 1}`}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  onClick={goPrev}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/80 px-3 py-2 text-pink-500 shadow hover:bg-white"
+                  aria-label="Imagen anterior"
+                >
+                  ‹
+                </button>
+                <button
+                  type="button"
+                  onClick={goNext}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/80 px-3 py-2 text-pink-500 shadow hover:bg-white"
+                  aria-label="Imagen siguiente"
+                >
+                  ›
+                </button>
+              </div>
+              <div className="mt-4 flex items-center justify-center gap-2">
+                {images.map((_, index) => (
+                  <button
+                    key={`dot-${index}`}
+                    type="button"
+                    onClick={() => setActiveIndex(index)}
+                    className={`h-2.5 w-2.5 rounded-full transition ${
+                      index === activeIndex ? 'bg-pink-500' : 'bg-pink-200'
+                    }`}
+                    aria-label={`Ir a imagen ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="nosotros" className="py-24 bg-pink-50 flex justify-center">
+      <section id="nosotros" className="py-6 bg-pink-50 flex justify-center">
         <div className="w-full max-w-6xl px-6">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800">
             Nosotros
@@ -169,7 +235,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="contacto" className="py-20 bg-pink-50 flex justify-center">
+      <section id="contacto" className="py-12 bg-pink-50 flex justify-center">
         <div className="w-full max-w-6xl px-6 flex flex-col items-center">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">Contactanos</h2>
@@ -231,7 +297,7 @@ export default function Home() {
               </form>
             </div>
             <div className="text-center w-full max-w-4xl">
-              <h3 className="text-2xl font-bold mb-6 text-gray-800">Other ways to reach us</h3>
+              <h3 className="text-2xl font-bold mb-10 text-gray-800">Other ways to reach us</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-center">
                 <div className="flex flex-col items-center gap-3">
                   <div className="w-12 h-12 bg-pink-400 rounded-lg flex items-center justify-center">
