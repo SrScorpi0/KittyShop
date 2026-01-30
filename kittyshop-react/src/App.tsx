@@ -14,6 +14,11 @@ const CART_STORAGE_KEY = 'kittyshop-cart';
 export default function App() {
   const [activeCategoryId, setActiveCategoryId] = useState(DEFAULT_CATEGORY);
   const [hasPurchased, setHasPurchased] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [sortBy, setSortBy] = useState<'recent' | 'price-asc' | 'price-desc'>('recent');
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     try {
       const stored = localStorage.getItem(CART_STORAGE_KEY);
@@ -25,11 +30,29 @@ export default function App() {
   });
 
   const visibleProducts = useMemo(() => {
-    if (activeCategoryId === DEFAULT_CATEGORY) {
-      return products;
+    const base = activeCategoryId === DEFAULT_CATEGORY
+      ? products
+      : products.filter((product) => product.categoryId === activeCategoryId);
+
+    const query = searchQuery.trim().toLowerCase();
+    const min = minPrice ? Number(minPrice) : null;
+    const max = maxPrice ? Number(maxPrice) : null;
+
+    const filtered = base.filter((product) => {
+      const matchesQuery = !query || product.title.toLowerCase().includes(query);
+      const matchesMin = min === null || product.price >= min;
+      const matchesMax = max === null || product.price <= max;
+      return matchesQuery && matchesMin && matchesMax;
+    });
+
+    if (sortBy === 'price-asc') {
+      return [...filtered].sort((a, b) => a.price - b.price);
     }
-    return products.filter((product) => product.categoryId === activeCategoryId);
-  }, [activeCategoryId]);
+    if (sortBy === 'price-desc') {
+      return [...filtered].sort((a, b) => b.price - a.price);
+    }
+    return filtered;
+  }, [activeCategoryId, searchQuery, minPrice, maxPrice, sortBy]);
 
   const cartCount = useMemo(
     () => cartItems.reduce((acc, item) => acc + item.quantity, 0),
@@ -74,11 +97,24 @@ export default function App() {
   function ShopLayout() {
     return (
       <div className="wrapper">
-        <HeaderMobile />
+        <HeaderMobile onOpenMenu={() => setIsMenuOpen(true)} />
         <Sidebar
           activeCategoryId={activeCategoryId}
-          onSelectCategory={setActiveCategoryId}
+          onSelectCategory={(id) => {
+            setActiveCategoryId(id);
+            setIsMenuOpen(false);
+          }}
           cartCount={cartCount}
+          isOpen={isMenuOpen}
+          onClose={() => setIsMenuOpen(false)}
+          searchQuery={searchQuery}
+          onSearchQueryChange={setSearchQuery}
+          minPrice={minPrice}
+          maxPrice={maxPrice}
+          onMinPriceChange={setMinPrice}
+          onMaxPriceChange={setMaxPrice}
+          sortBy={sortBy}
+          onSortByChange={setSortBy}
         />
         <Outlet />
       </div>
@@ -91,7 +127,20 @@ export default function App() {
       <Route element={<ShopLayout />}>
         <Route
           path="/productos"
-          element={<Main products={visibleProducts} onAddToCart={handleAddToCart} />}
+          element={
+            <Main
+              products={visibleProducts}
+              onAddToCart={handleAddToCart}
+              searchQuery={searchQuery}
+              onSearchQueryChange={setSearchQuery}
+              minPrice={minPrice}
+              maxPrice={maxPrice}
+              onMinPriceChange={setMinPrice}
+              onMaxPriceChange={setMaxPrice}
+              sortBy={sortBy}
+              onSortByChange={setSortBy}
+            />
+          }
         />
         <Route
           path="/carrito"

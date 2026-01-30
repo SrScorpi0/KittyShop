@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { CartItem } from '../data/products';
 
 type CartProps = {
@@ -23,8 +23,55 @@ export default function Cart({
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [touched, setTouched] = useState<{ phone: boolean; address: boolean }>({
+    phone: false,
+    address: false,
+  });
+  const [notes, setNotes] = useState('');
+
+  const phoneError = useMemo(() => {
+    if (!touched.phone) return '';
+    if (!phone.trim()) return 'El telefono es obligatorio';
+    if (phone.replace(/\D/g, '').length < 6) return 'Telefono invalido';
+    return '';
+  }, [phone, touched.phone]);
+
+  const addressError = useMemo(() => {
+    if (!touched.address) return '';
+    if (!address.trim()) return 'La direccion es obligatoria';
+    return '';
+  }, [address, touched.address]);
+
+  const canSubmit =
+    items.length > 0 && !phoneError && !addressError && phone.trim() && address.trim();
+
+  useEffect(() => {
+    const stored = localStorage.getItem('kittyshop-checkout');
+    if (stored) {
+      try {
+        const data = JSON.parse(stored) as { phone?: string; address?: string; message?: string; notes?: string };
+        setPhone(data.phone || '');
+        setAddress(data.address || '');
+        setMessage(data.message || '');
+        setNotes(data.notes || '');
+      } catch {
+        // ignore invalid data
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(
+      'kittyshop-checkout',
+      JSON.stringify({ phone, address, message, notes }),
+    );
+  }, [phone, address, message, notes]);
 
   async function handleSubmitOrder() {
+    if (!canSubmit) {
+      setTouched({ phone: true, address: true });
+      return;
+    }
     setStatus('loading');
     setErrorMessage('');
     try {
@@ -37,6 +84,7 @@ export default function Cart({
           phone,
           address,
           message,
+          notes,
         }),
       });
 
@@ -46,6 +94,11 @@ export default function Cart({
       }
 
       setStatus('success');
+      localStorage.removeItem('kittyshop-checkout');
+      setPhone('');
+      setAddress('');
+      setMessage('');
+      setNotes('');
       onPurchase();
     } catch (error) {
       setStatus('error');
@@ -102,6 +155,17 @@ export default function Cart({
 
             <div className="carrito-formulario">
               <h3>Datos para envio</h3>
+              <div className="carrito-resumen">
+                <h4>Resumen del pedido</h4>
+                <ul>
+                  {items.map((item) => (
+                    <li key={item.id}>
+                      {item.title} x{item.quantity} - ${item.price * item.quantity}
+                    </li>
+                  ))}
+                </ul>
+                <p className="carrito-resumen-total">Total: ${total}</p>
+              </div>
               <div className="carrito-formulario-grid">
                 <label>
                   Telefono
@@ -109,8 +173,10 @@ export default function Cart({
                     type="tel"
                     value={phone}
                     onChange={(event) => setPhone(event.target.value)}
+                    onBlur={() => setTouched((prev) => ({ ...prev, phone: true }))}
                     placeholder="Tu telefono"
                   />
+                  {phoneError && <span className="carrito-error">{phoneError}</span>}
                 </label>
                 <label>
                   Direccion
@@ -118,8 +184,10 @@ export default function Cart({
                     type="text"
                     value={address}
                     onChange={(event) => setAddress(event.target.value)}
+                    onBlur={() => setTouched((prev) => ({ ...prev, address: true }))}
                     placeholder="Tu direccion"
                   />
+                  {addressError && <span className="carrito-error">{addressError}</span>}
                 </label>
               </div>
               <label>
@@ -129,6 +197,15 @@ export default function Cart({
                   value={message}
                   onChange={(event) => setMessage(event.target.value)}
                   placeholder="Algo que quieras agregar"
+                />
+              </label>
+              <label>
+                Notas (opcional)
+                <textarea
+                  rows={2}
+                  value={notes}
+                  onChange={(event) => setNotes(event.target.value)}
+                  placeholder="Indicaciones extra"
                 />
               </label>
             </div>
@@ -154,7 +231,7 @@ export default function Cart({
                   className="carrito-acciones-comprar"
                   type="button"
                   onClick={handleSubmitOrder}
-                  disabled={status === 'loading'}
+                  disabled={status === 'loading' || !canSubmit}
                 >
                   {status === 'loading' ? 'Enviando...' : 'Enviar pedido'}
                 </button>
@@ -162,6 +239,9 @@ export default function Cart({
             </div>
             {status === 'error' && (
               <p className="carrito-error">{errorMessage}</p>
+            )}
+            {status === 'success' && (
+              <p className="carrito-success">Pedido enviado correctamente.</p>
             )}
           </>
         )}

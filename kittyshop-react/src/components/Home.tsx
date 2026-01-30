@@ -31,7 +31,7 @@ export default function Home() {
     <div className="transition-all duration-300 w-full">
       <header className="bg-white text-gray-900 shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="flex-shrink-0 flex items-center gap-3">
               <img src="/img/Logo/Logo.png" alt="Logo" className="h-[80px] w-[80px]" />
               <span className="text-xl font-bold text-pink-500">AmiKittyShop</span>
@@ -59,7 +59,7 @@ export default function Home() {
                 Contact
               </a>
             </nav>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center justify-between gap-3 md:justify-end">
               <div className="hidden md:flex gap-2">
                 <button className="px-4 py-2 text-pink-500 hover:text-pink-600 border border-pink-200 rounded-lg hover:border-pink-300 transition-colors">
                   Login
@@ -80,13 +80,13 @@ export default function Home() {
 
       <div className="flex flex-col gap-2 bg-pink-50">
       <section className="bg-pink-50 py-10 flex justify-center">
-        <div className="w-full max-w-6xl px-6 lg:px-12">
+        <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="text-center lg:text-left">
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 text-gray-800">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6 text-gray-800">
                 Cosillas bellas de Hello Kitty
               </h1>
-              <p className="text-lg text-gray-600">
+              <p className="text-base sm:text-lg text-gray-600">
                 Descubre nuestra colección de cerámicas, toallones y detalles únicos.
               </p>
               <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
@@ -98,14 +98,14 @@ export default function Home() {
                 </Link>
                 <a
                   href="#contacto"
-                  className="px-8 py-4 border border-pink-200 text-pink-500 rounded-lg font-semibold hover:border-pink-300 hover:text-pink-600 transition-colors"
+                  className="px-5 py-3 border border-pink-200 text-pink-500 rounded-lg font-semibold hover:border-pink-300 hover:text-pink-600 transition-colors"
                 >
                   Contactanos
                 </a>
               </div>
             </div>
             <div className="order-first lg:order-last">
-              <div className="relative w-full overflow-hidden rounded-lg shadow-lg border border-pink-100 bg-white h-[320px] md:h-[400px]">
+              <div className="relative w-full overflow-hidden rounded-lg shadow-lg border border-pink-100 bg-white h-[240px] sm:h-[300px] md:h-[400px]">
                 <div
                   className="flex h-full w-full transition-transform duration-700 ease-in-out"
                   style={{ transform: `translateX(-${activeIndex * 100}%)` }}
@@ -123,7 +123,7 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={goPrev}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/80 px-3 py-2 text-pink-500 shadow hover:bg-white"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/80 px-3 py-2 text-pink-500 shadow hover:bg-white"
                   aria-label="Imagen anterior"
                 >
                   ‹
@@ -131,7 +131,7 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={goNext}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/80 px-3 py-2 text-pink-500 shadow hover:bg-white"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/80 px-3 py-2 text-pink-500 shadow hover:bg-white"
                   aria-label="Imagen siguiente"
                 >
                   ›
@@ -155,12 +155,12 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="nosotros" className="py-6 bg-pink-50 flex justify-center">
-        <div className="w-full max-w-6xl px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800">
+      <section id="nosotros" className="py-10 sm:py-12 bg-pink-50 flex justify-center">
+        <div className="w-full max-w-6xl px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12 text-gray-800">
             Nosotros
           </h2>
-          <div className="px-6">
+          <div className="px-0 sm:px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-6 text-lg tracking-tight">
               <div className="bg-pink-50 rounded-lg shadow-lg p-6 border border-pink-100">
                 <div className="flex flex-row">
@@ -236,10 +236,10 @@ export default function Home() {
       </section>
 
       <section id="contacto" className="py-12 bg-pink-50 flex justify-center">
-        <div className="w-full max-w-6xl px-6 flex flex-col items-center">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">Contactanos</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+        <div className="w-full max-w-6xl px-4 sm:px-6 flex flex-col items-center">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-gray-800">Contactanos</h2>
+            <p className="text-base sm:text-xl text-gray-600 max-w-2xl mx-auto">
               Alguna pregunta o comentario que quieras dejarnos?
             </p>
           </div>

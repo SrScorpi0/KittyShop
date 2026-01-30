@@ -466,6 +466,29 @@ main {
   gap: 0.75rem;
 }
 
+.carrito-resumen {
+  background: var(--clr-white);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.carrito-resumen h4 {
+  font-size: 0.95rem;
+}
+
+.carrito-resumen ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.carrito-resumen-total {
+  font-weight: 700;
+}
+
 .carrito-formulario h3 {
   font-size: 1rem;
 }
@@ -473,6 +496,11 @@ main {
 .carrito-formulario-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.carrito-acciones-izquierda,
+.carrito-acciones-derecha {
   gap: 0.75rem;
 }
 
@@ -495,12 +523,47 @@ main {
   color: var(--clr-red);
 }
 
+.carrito-success {
+  color: #1f7a3f;
+  font-weight: 600;
+}
+
 .header-mobile {
   display: none;
 }
 
 .close-menu {
   display: none;
+}
+
+.menu-overlay {
+  display: none;
+}
+
+.filtros-mobile {
+  display: none;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.filtros-mobile h4 {
+  font-size: 0.95rem;
+}
+
+.filtros-mobile label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+}
+
+.filtros-mobile input,
+.filtros-mobile select {
+  border: 1px solid var(--clr-white);
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  font-family: inherit;
 }
 
 .disabled {
@@ -539,12 +602,15 @@ main {
     position: fixed;
     z-index: 9;
     background-color: var(--clr-main);
-    left: 0;
+    right: 0;
+    width: 85vw;
+    max-width: 320px;
     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.75);
-    transform: (-100%);
+    transform: translateX(110%);
     opacity: 0;
     visibility: hidden;
-    transition: 0.2s;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    will-change: transform;
   }
 
   .aside-visible {
@@ -599,6 +665,18 @@ main {
     right: 1rem;
   }
 
+  .menu-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 8;
+  }
+
+  .filtros-mobile {
+    display: flex;
+  }
+
   .carrito-producto {
     gap: 1rem;
     flex-wrap: wrap;
@@ -613,6 +691,22 @@ main {
   .carrito-acciones {
     flex-wrap: wrap;
     row-gap: 1rem;
+  }
+
+  .carrito-acciones-derecha {
+    flex-wrap: wrap;
+  }
+
+  .carrito-acciones-total {
+    width: 100%;
+  }
+
+  .carrito-acciones-comprar {
+    width: 100%;
+  }
+
+  .carrito-formulario-grid {
+    grid-template-columns: 1fr;
   }
 }
 
