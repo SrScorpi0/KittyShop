@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { CartItem } from '../data/products';
 
 type CartProps = {
@@ -17,6 +18,40 @@ export default function Cart({
 }: CartProps) {
   const total = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const isEmpty = items.length === 0 && !hasPurchased;
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  async function handleSubmitOrder() {
+    setStatus('loading');
+    setErrorMessage('');
+    try {
+      const response = await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items,
+          total,
+          phone,
+          address,
+          message,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data?.error || 'Error al enviar el pedido');
+      }
+
+      setStatus('success');
+      onPurchase();
+    } catch (error) {
+      setStatus('error');
+      setErrorMessage(error instanceof Error ? error.message : 'Error al enviar el pedido');
+    }
+  }
 
   return (
     <main>
@@ -65,6 +100,39 @@ export default function Cart({
               ))}
             </div>
 
+            <div className="carrito-formulario">
+              <h3>Datos para envio</h3>
+              <div className="carrito-formulario-grid">
+                <label>
+                  Telefono
+                  <input
+                    type="tel"
+                    value={phone}
+                    onChange={(event) => setPhone(event.target.value)}
+                    placeholder="Tu telefono"
+                  />
+                </label>
+                <label>
+                  Direccion
+                  <input
+                    type="text"
+                    value={address}
+                    onChange={(event) => setAddress(event.target.value)}
+                    placeholder="Tu direccion"
+                  />
+                </label>
+              </div>
+              <label>
+                Mensaje
+                <textarea
+                  rows={3}
+                  value={message}
+                  onChange={(event) => setMessage(event.target.value)}
+                  placeholder="Algo que quieras agregar"
+                />
+              </label>
+            </div>
+
             <div id="carrito-acciones" className="carrito-acciones">
               <div className="carrito-acciones-izquierda">
                 <button
@@ -85,12 +153,16 @@ export default function Cart({
                   id="carrito-acciones-comprar"
                   className="carrito-acciones-comprar"
                   type="button"
-                  onClick={onPurchase}
+                  onClick={handleSubmitOrder}
+                  disabled={status === 'loading'}
                 >
-                  Comprar ahora
+                  {status === 'loading' ? 'Enviando...' : 'Enviar pedido'}
                 </button>
               </div>
             </div>
+            {status === 'error' && (
+              <p className="carrito-error">{errorMessage}</p>
+            )}
           </>
         )}
 

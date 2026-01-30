@@ -451,6 +451,50 @@ main {
   border-bottom-right-radius: 1rem;
 }
 
+.carrito-acciones-comprar:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.carrito-formulario {
+  background-color: var(--clr-gray);
+  padding: 1rem;
+  border-radius: 1rem;
+  color: var(--clr-main);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.carrito-formulario h3 {
+  font-size: 1rem;
+}
+
+.carrito-formulario-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.carrito-formulario label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+}
+
+.carrito-formulario input,
+.carrito-formulario textarea {
+  border: 1px solid var(--clr-white);
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  font-family: inherit;
+}
+
+.carrito-error {
+  color: var(--clr-red);
+}
+
 .header-mobile {
   display: none;
 }
